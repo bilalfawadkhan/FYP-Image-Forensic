@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1271</width>
+    <height>751</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>27</width>
+    <height>27</height>
+   </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="mainwind">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1270</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#mainwind{background-Color : rgb(36, 34, 34);
+color : rgb(255, 255, 255);
+border-radius : 20px;
+}</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QGroupBox" name="rSideGroup">
+     <property name="geometry">
+      <rect>
+       <x>880</x>
+       <y>80</y>
+       <width>361</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border:0px</string>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QPushButton" name="rsideGroupCrossB">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>10</y>
+        <width>81</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border : 0px;</string>
+      </property>
+      <property name="text">
+       <string notr="true"/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>UI Resources/Toolbar Icons/cross 2.svg</normaloff>UI Resources/Toolbar Icons/cross 2.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="rSideGroupText">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color :rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string>NILL</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="innerGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>351</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QGroupBox" name="block1">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>146</width>
+         <height>100</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">Background-color :rgb(53, 51, 51);
+border-radius : 20px;
+</string>
+       </property>
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>16</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">Background-color :qlineargradient(spread:pad, x1:0.352632, y1:0.363636, x2:1, y2:1, stop:0 rgba(104, 187, 89, 255), stop:1 rgba(30, 86, 49, 255));
+border-radius : 5px;
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block1Title">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>0</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color :rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Height</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block1value">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>40</y>
+          <width>71</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Nill</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="block2">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>50</y>
+         <width>146</width>
+         <height>100</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">Background-color :rgb(53, 51, 51);
+border-radius : 20px;
+</string>
+       </property>
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="widget_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>16</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">Background-color :qlineargradient(spread:pad, x1:0.052356, y1:0.0568182, x2:0.979, y2:1, stop:0 rgba(163, 223, 232, 255), stop:1 rgba(24, 197, 202, 255));
+border-radius : 5px;
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block2Title">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>10</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color :rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Width</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block2value">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>40</y>
+          <width>71</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Nill</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="block4">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>180</y>
+         <width>146</width>
+         <height>100</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">Background-color :rgb(53, 51, 51);
+border-radius : 20px;
+</string>
+       </property>
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="widget_10" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>16</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">Background-color :qlineargradient(spread:pad, x1:0.242316, y1:0.244, x2:1, y2:1, stop:0 rgba(231, 102, 255, 255), stop:0.968421 rgba(159, 73, 158, 255), stop:0.989474 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
+border-radius : 5px;
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block4value">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>40</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Nill</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block4Title">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>10</y>
+          <width>51</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color :rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Make</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="block3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>146</width>
+         <height>100</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">Background-color :rgb(53, 51, 51);
+border-radius : 20px;
+</string>
+       </property>
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="widget_4" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>16</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">Background-color :qlineargradient(spread:pad, x1:0.397906, y1:0.364, x2:1, y2:1, stop:0 rgba(223, 176, 115, 255), stop:1 rgba(236, 159, 43, 255));
+border-radius : 5px;
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block3Title">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>10</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color :rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Size</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block3value">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>40</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Nill</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="block5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>290</y>
+         <width>341</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">Background-color :rgb(53, 51, 51);
+border-radius : 20px;
+</string>
+       </property>
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="widget_3" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>16</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">Background-color :qlineargradient(spread:pad, x1:0.395, y1:0.335227, x2:1, y2:1, stop:0 rgba(230, 119, 119, 255), stop:1 rgba(232, 11, 11, 255));
+border-radius : 5px;
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block5Title">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>10</y>
+          <width>131</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color :rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string notr="true">Creation Date</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="block5value">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>38</y>
+          <width>271</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string notr="true">Nill</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <zorder>innerGroupBox</zorder>
+     <zorder>rsideGroupCrossB</zorder>
+     <zorder>rSideGroupText</zorder>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1271</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
