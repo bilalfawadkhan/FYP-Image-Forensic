@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-import time
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect
-from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
-import exifread
-import cv2
 import matplotlib as plt
 
 plt.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect
+from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
+import exifread
+import cv2
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -134,6 +132,14 @@ class UiMainWindow(object):
 		self.label_4.setGeometry(QtCore.QRect(80, 10, 41, 21))
 		self.label_4.setText("Press")
 		self.label_4.setObjectName("label_4")
+		self.playButton = QtWidgets.QPushButton(self.midBox)
+		self.playButton.setGeometry(QtCore.QRect(0, 90, 41, 41))
+		self.playButton.setText("")
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("UI Resources/playIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.playButton.setIcon(icon)
+		self.playButton.setObjectName("playButton")
+		# self.playButton.clicked.connect(self.runForensics)
 		self.uploadButton = QtWidgets.QPushButton(self.mainwind)
 		self.uploadButton.setGeometry(QtCore.QRect(40, 150, 141, 51))
 		font = QtGui.QFont()
@@ -268,15 +274,14 @@ class UiMainWindow(object):
 		self.block1value.setObjectName("block1value")
 		self.block2 = QtWidgets.QGroupBox(self.innerGroupBox)
 		self.block2.setGeometry(QtCore.QRect(190, 50, 146, 100))
-		self.block2.setStyleSheet("Background-color :rgb(53, 51, 51);\n"
-		                          "border-radius : 20px;\n"
-		                          "")
+		self.block2.setStyleSheet("Background-color :rgb(53, 51, 51);\n""border-radius : 20px;\n")
 		self.block2.setTitle("")
 		self.block2.setObjectName("block2")
 		self.widget_2 = QtWidgets.QWidget(self.block2)
 		self.widget_2.setGeometry(QtCore.QRect(10, 20, 16, 60))
 		self.widget_2.setStyleSheet(
-			"Background-color :qlineargradient(spread:pad, x1:0.052356, y1:0.0568182, x2:0.979, y2:1, stop:0 rgba(163, 223, 232, 255), stop:1 rgba(24, 197, 202, 255));\n"
+			"Background-color :qlineargradient(spread:pad, x1:0.052356, y1:0.0568182, x2:0.979, y2:1, stop:0 rgba(163, "
+			"223, 232, 255), stop:1 rgba(24, 197, 202, 255));\n "
 			"border-radius : 5px;\n"
 			"")
 		self.widget_2.setObjectName("widget_2")
@@ -298,15 +303,15 @@ class UiMainWindow(object):
 		self.block2value.setObjectName("block2value")
 		self.block4 = QtWidgets.QGroupBox(self.innerGroupBox)
 		self.block4.setGeometry(QtCore.QRect(190, 180, 146, 100))
-		self.block4.setStyleSheet("Background-color :rgb(53, 51, 51);\n"
-		                          "border-radius : 20px;\n"
-		                          "")
+		self.block4.setStyleSheet("Background-color :rgb(53, 51, 51);\n""border-radius : 20px;\n")
 		self.block4.setTitle("")
 		self.block4.setObjectName("block4")
 		self.widget_10 = QtWidgets.QWidget(self.block4)
 		self.widget_10.setGeometry(QtCore.QRect(10, 20, 16, 60))
 		self.widget_10.setStyleSheet(
-			"Background-color :qlineargradient(spread:pad, x1:0.242316, y1:0.244, x2:1, y2:1, stop:0 rgba(231, 102, 255, 255), stop:0.968421 rgba(159, 73, 158, 255), stop:0.989474 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));\n"
+			"Background-color :qlineargradient(spread:pad, x1:0.242316, y1:0.244, x2:1, y2:1, stop:0 rgba(231, 102, "
+			"255, 255), stop:0.968421 rgba(159, 73, 158, 255), stop:0.989474 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, "
+			"0));\n "
 			"border-radius : 5px;\n"
 			"")
 		self.widget_10.setObjectName("widget_10")
@@ -328,15 +333,14 @@ class UiMainWindow(object):
 		self.block4Title.setObjectName("block4Title")
 		self.block3 = QtWidgets.QGroupBox(self.innerGroupBox)
 		self.block3.setGeometry(QtCore.QRect(20, 180, 146, 100))
-		self.block3.setStyleSheet("Background-color :rgb(53, 51, 51);\n"
-		                          "border-radius : 20px;\n"
-		                          "")
+		self.block3.setStyleSheet("Background-color :rgb(53, 51, 51);\n""border-radius : 20px;\n")
 		self.block3.setTitle("")
 		self.block3.setObjectName("block3")
 		self.widget_4 = QtWidgets.QWidget(self.block3)
 		self.widget_4.setGeometry(QtCore.QRect(10, 20, 16, 60))
 		self.widget_4.setStyleSheet(
-			"Background-color :qlineargradient(spread:pad, x1:0.397906, y1:0.364, x2:1, y2:1, stop:0 rgba(223, 176, 115, 255), stop:1 rgba(236, 159, 43, 255));\n"
+			"Background-color :qlineargradient(spread:pad, x1:0.397906, y1:0.364, x2:1, y2:1, stop:0 rgba(223, 176, "
+			"115, 255), stop:1 rgba(236, 159, 43, 255));\n "
 			"border-radius : 5px;\n"
 			"")
 		self.widget_4.setObjectName("widget_4")
@@ -358,15 +362,14 @@ class UiMainWindow(object):
 		self.block3value.setObjectName("block3value")
 		self.block5 = QtWidgets.QGroupBox(self.innerGroupBox)
 		self.block5.setGeometry(QtCore.QRect(10, 290, 341, 101))
-		self.block5.setStyleSheet("Background-color :rgb(53, 51, 51);\n"
-		                          "border-radius : 20px;\n"
-		                          "")
+		self.block5.setStyleSheet("Background-color :rgb(53, 51, 51);\n""border-radius : 20px;\n")
 		self.block5.setTitle("")
 		self.block5.setObjectName("block5")
 		self.widget_3 = QtWidgets.QWidget(self.block5)
 		self.widget_3.setGeometry(QtCore.QRect(10, 20, 16, 60))
 		self.widget_3.setStyleSheet(
-			"Background-color :qlineargradient(spread:pad, x1:0.395, y1:0.335227, x2:1, y2:1, stop:0 rgba(230, 119, 119, 255), stop:1 rgba(232, 11, 11, 255));\n"
+			"Background-color :qlineargradient(spread:pad, x1:0.395, y1:0.335227, x2:1, y2:1, stop:0 rgba(230, 119, "
+			"119, 255), stop:1 rgba(232, 11, 11, 255));\n "
 			"border-radius : 5px;\n"
 			"")
 		self.widget_3.setObjectName("widget_3")
@@ -496,7 +499,7 @@ class UiMainWindow(object):
 			self.isImageinProjectDir()
 			print(self.projectDirList)
 
-	##This method runs whenever ever image change is detectd wether from selection or deletion
+	##This method runs whenever ever image change is detectd wether from selection or deletion##
 	def selectImageonChange(self):
 		toselect = self.projectDirList.currentItem()
 		if toselect is not None:
@@ -564,17 +567,21 @@ class UiMainWindow(object):
 		self.verticalLayout.addWidget(sc)
 		self.verticalayoutcounter = self.verticalayoutcounter + 1
 
+	##Method to SHow MetaData##
 	def showMeta(self):
 		self.verticalLayoutWidget.hide()
 		self.innerGroupBox.show()
 		self.rSideGroupText.setText('MetaData')
 		self.showRGroupBox()
 
+	##Method to SHow HistData##
 	def showHist(self):
 		self.innerGroupBox.hide()
 		self.verticalLayoutWidget.show()
 		self.rSideGroupText.setText('Histogram')
 		self.showRGroupBox()
+
+	##To Run the Algo##
 
 
 if __name__ == "__main__":

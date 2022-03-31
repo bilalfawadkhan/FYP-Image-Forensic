@@ -729,6 +729,23 @@ border-radius : 20px;</string>
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="playButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>90</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string notr="true"/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../UI Resources/playIcon.png</normaloff>../UI Resources/playIcon.png</iconset>
+      </property>
+     </widget>
     </widget>
     <widget class="QPushButton" name="uploadButton">
      <property name="geometry">
