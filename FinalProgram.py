@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect
+from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
 import matplotlib as plt
+import exifread
+import cv2
+import os
+
 
 plt.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect
-from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
-import exifread
-import cv2
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -523,21 +525,27 @@ class UiMainWindow(object):
 	## Method to Extact Meta Data and Setting it in the GUI Views ##
 
 	def setMetaData(self, flag):
-		exif_keys = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
+		jpeg_tags = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
+		tif_tags = ['Image ImageLength', 'Image ImageWidth']
+		tagtoberead = []
 		block = [self.block1value, self.block2value, self.block3value, self.block4value, self.block5value]
 		if flag == 1:
 			f = open(self.mainimagepath, 'rb')
 			tags = exifread.process_file(f)
-			print(tags)
-			for keys in range(len(exif_keys)):
+			fileformat = os.path.splitext(self.mainimagepath)[1]
+			if fileformat == '.tif':
+				tagtoberead = tif_tags
+			else:
+				tagtoberead = jpeg_tags
+			for keys in range(len(tagtoberead)):
 				if len(tags) != 0:
-					print(str(tags[exif_keys[keys]]))
-					block[keys].setText(str(tags[exif_keys[keys]]))
+					print(str(tags[tagtoberead[keys]]))
+					block[keys].setText(str(tags[tagtoberead[keys]]))
 				else:
 					print('not here')
 					block[keys].setText('Nill')
 		else:
-			for keys in range(len(exif_keys)):
+			for keys in range(len(tagtoberead)):
 				block[keys].setText('Nill')
 
 	## Method to set iamge in Main Image Window
