@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import matplotlib as plt
-
+import exifread, cv2
 plt.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect, QObject, pyqtSignal, QThread
 from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
-import exifread
-import cv2
+
+import ChangeofLaplacian as cl
+
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -17,6 +18,19 @@ class MplCanvas(FigureCanvasQTAgg):
 		fig = Figure(figsize=(width, height), dpi=dpi)
 		self.axes = fig.add_subplot(111)
 		super(MplCanvas, self).__init__(fig)
+
+
+class Worker(QObject):
+	finished = pyqtSignal()
+	progress = pyqtSignal(int)
+
+	def run(self):
+		img = 'C:\\Users\\bilal\\Documents\\GitHub\\FYP-Image-Forensic\\imgs\\ucid00005.tif'
+		"""Long-running task."""
+		im = cl.getChangeofLaplacian(img)
+		print('task Finished')
+	# self.progress.emit(i + 1)
+	# self.finished.emit()
 
 
 class UiMainWindow(object):
@@ -139,7 +153,7 @@ class UiMainWindow(object):
 		icon.addPixmap(QtGui.QPixmap("UI Resources/playIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.playButton.setIcon(icon)
 		self.playButton.setObjectName("playButton")
-		# self.playButton.clicked.connect(self.runForensics)
+		self.playButton.clicked.connect(self.runForensics)
 		self.uploadButton = QtWidgets.QPushButton(self.mainwind)
 		self.uploadButton.setGeometry(QtCore.QRect(40, 150, 141, 51))
 		font = QtGui.QFont()
@@ -523,21 +537,27 @@ class UiMainWindow(object):
 	## Method to Extact Meta Data and Setting it in the GUI Views ##
 
 	def setMetaData(self, flag):
-		exif_keys = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
+		jpeg_tags = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
+		tif_tags = ['Image ImageLength', 'Image ImageWidth']
+		tagtoberead = []
 		block = [self.block1value, self.block2value, self.block3value, self.block4value, self.block5value]
 		if flag == 1:
 			f = open(self.mainimagepath, 'rb')
 			tags = exifread.process_file(f)
-			print(tags)
-			for keys in range(len(exif_keys)):
+			fileformat = os.path.splitext(self.mainimagepath)[1]
+			if fileformat == '.tif':
+				tagtoberead = tif_tags
+			else:
+				tagtoberead = jpeg_tags
+			for keys in range(len(tagtoberead)):
 				if len(tags) != 0:
-					print(str(tags[exif_keys[keys]]))
-					block[keys].setText(str(tags[exif_keys[keys]]))
+					print(str(tags[tagtoberead[keys]]))
+					block[keys].setText(str(tags[tagtoberead[keys]]))
 				else:
 					print('not here')
 					block[keys].setText('Nill')
 		else:
-			for keys in range(len(exif_keys)):
+			for keys in range(len(tagtoberead)):
 				block[keys].setText('Nill')
 
 	## Method to set iamge in Main Image Window
@@ -581,7 +601,33 @@ class UiMainWindow(object):
 		self.rSideGroupText.setText('Histogram')
 		self.showRGroupBox()
 
-	##To Run the Algo##
+##To Run the Algo##
+
+	def runForensics(self):
+		# Step 2: Create a QThread object
+		self.thread = QThread()
+		# Step 3: Create a worker object
+		self.worker = Worker()
+		# Step 4: Move worker to the thread
+		self.worker.moveToThread(self.thread)
+		# Step 5: Connect signals and slots
+		self.thread.started.connect(self.worker.run)
+		self.worker.finished.connect(self.thread.quit)
+		self.worker.finished.connect(self.worker.deleteLater)
+		self.thread.finished.connect(self.thread.deleteLater)
+		# self.worker.progress.connect(self.reportProgress)
+		# Step 6: Start the thread
+		self.thread.start()
+
+		# Final resets
+		# self.longRunningBtn.setEnabled(False)
+		# # self.thread.finished.connect(
+		# # 	lambda: self.longRunningBtn.setEnabled(True)
+		# # )
+		# # self.thread.finished.connect(
+		# # 	lambda: self.stepLabel.setText("Long-Running Step: 0")
+		# # )
+
 
 
 if __name__ == "__main__":
