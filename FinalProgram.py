@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
+import os
+
 import matplotlib as plt
 import exifread, cv2
+
 plt.use('Qt5Agg')
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg ,  NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect, QObject, pyqtSignal, QThread
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect, QObject, pyqtSignal, QThread, QRunnable, QThreadPool
 from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
 
 import ChangeofLaplacian as cl
@@ -20,17 +23,21 @@ class MplCanvas(FigureCanvasQTAgg):
 		super(MplCanvas, self).__init__(fig)
 
 
-class Worker(QObject):
-	finished = pyqtSignal()
-	progress = pyqtSignal(int)
+# self.progress.emit(i + 1)
+# self.finished.emit()
+
+
+class Runnable(QRunnable):
+	def __init__(self):
+		super().__init__()
 
 	def run(self):
+		# Your long-running task goes here ...
 		img = 'C:\\Users\\bilal\\Documents\\GitHub\\FYP-Image-Forensic\\imgs\\ucid00005.tif'
 		"""Long-running task."""
+		print('task started')
 		im = cl.getChangeofLaplacian(img)
 		print('task Finished')
-	# self.progress.emit(i + 1)
-	# self.finished.emit()
 
 
 class UiMainWindow(object):
@@ -40,7 +47,7 @@ class UiMainWindow(object):
 		flag = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint)
 		MainWindow.setWindowFlags(flag)
 		MainWindow.setFixedSize(1272, 752)
-		MainWindow.setStyleSheet("#MainWindow{border :200px solid black;}")
+		MainWindow.setStyleSheet("#MainWindow{border :200px solid rgb(36, 34, 34);}")
 		MainWindow.setIconSize(QtCore.QSize(27, 27))
 		MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
 		self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -49,7 +56,7 @@ class UiMainWindow(object):
 		self.mainwind.setGeometry(QtCore.QRect(0, 0, 1271, 751))
 		self.mainwind.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
 		self.mainwind.setStyleSheet(
-			"#mainwind{background-Color : rgb(36, 34, 34);\n""color : rgb(255, 255, 255);\n" "border-radius : 20px;\n" "}")
+			"#mainwind{background-Color : rgba(37,41,51,255);\n""color : rgb(255, 255, 255);\n" "border-radius : 20px;\n" "}")
 		self.mainwind.setTitle("")
 		self.mainwind.setObjectName("mainwind")
 		self.toolbar = QtWidgets.QGroupBox(self.mainwind)
@@ -108,7 +115,7 @@ class UiMainWindow(object):
 		self.midBox = QtWidgets.QGroupBox(self.mainwind)
 		self.midBox.setGeometry(QtCore.QRect(220, 140, 901, 391))
 		self.midBox.setStyleSheet(
-			"background-Color : rgb(79, 76, 76);\n""color : rgb(255, 255, 255);\n""border-radius : 20px;")
+			"background-Color : rgba(53,59,75,255);\n""color : rgb(255, 255, 255);\n""border-radius : 20px;")
 		self.midBox.setTitle("")
 		self.midBox.setObjectName("midBox")
 		self.metaDataButton = QtWidgets.QPushButton(self.midBox)
@@ -487,7 +494,7 @@ class UiMainWindow(object):
 		self.animation2.setEndValue(QRect(point2, QtCore.QSize(stretchWidth2, height2)))
 		self.animation2.start()
 
-	## Methods to Open Dialog and then add Image Name to QlistWidget and Add Path to Dictionary##
+	# Methods to Open Dialog and then add Image Name to QlistWidget and Add Path to Dictionary##
 	imgpathDict = dict()  # Storing Loaded Images Path with ,key as the object of the QlistWidget
 
 	def dialogOpen(self):
@@ -497,6 +504,13 @@ class UiMainWindow(object):
 			imgPath = filename[0]
 			imgName = imgPath.split("/")[-1]
 			listWidgetItem = QListWidgetItem(imgName)
+			if imgPath.endswith('tif'):
+				path = 'UI Resources/FIle Formats/tiff.png'
+			else:
+				path = 'UI Resources/FIle Formats/jpeg.png'
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap(path), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			listWidgetItem.setIcon(icon)
 			self.imgpathDict[str(listWidgetItem)] = imgPath
 			self.projectDirList.addItem(listWidgetItem)
 			self.mainimagepath = imgPath
@@ -560,7 +574,7 @@ class UiMainWindow(object):
 			for keys in range(len(tagtoberead)):
 				block[keys].setText('Nill')
 
-	## Method to set iamge in Main Image Window
+	# Method to set iamge in Main Image Window
 	def setImage(self, flag: int):
 		if flag == 1:
 			self.mainImage.setPixmap(QtGui.QPixmap(self.mainimagepath))
@@ -571,62 +585,53 @@ class UiMainWindow(object):
 
 	verticalayoutcounter = 0
 
-	## Method to Calculate Histogram of the Image and setting it in the View
+	# Method to Calculate Histogram of the Image and setting it in the View
 
 	def setHistogram(self):
 		# reads an input image
 		img = cv2.imread(self.mainimagepath, 0)
 		# find frequency of pixels in range 0-255
-		histr = cv2.calcHist([img], [0], None, [256], [0, 256])
+		histogram = cv2.calcHist([img], [0], None, [256], [0, 256])
 		# show the plotting graph of an image
-		sc = MplCanvas(self, width=3, height=2, dpi=50)
-		sc.axes.plot(histr)
+		sc = MplCanvas(self, width=2, height=1, dpi=70)
+		sc.axes.plot(histogram)
+		# Create toolbar, passing canvas as first parament, parent (self, the MainWindow) as second.
+		toolbar = NavigationToolbar(sc, MainWindow)
+
+
+		# # # Create a placeholder widget to hold our toolbar and canvas.
+		# # widget = QtWidgets.QWidget()
+		# # widget.setLayout(layout)
+		# self.setCentralWidget(widget)
+		# self.show()
 		if self.verticalayoutcounter > 0:
 			for i in reversed(range(self.verticalLayout.count())):
 				self.verticalLayout.itemAt(i).widget().setParent(None)
+		self.verticalLayout.addWidget(toolbar)
 		self.verticalLayout.addWidget(sc)
 		self.verticalayoutcounter = self.verticalayoutcounter + 1
 
-	##Method to SHow MetaData##
+	# Method to SHow MetaData##
 	def showMeta(self):
 		self.verticalLayoutWidget.hide()
 		self.innerGroupBox.show()
 		self.rSideGroupText.setText('MetaData')
 		self.showRGroupBox()
 
-	##Method to SHow HistData##
+	# Method to SHow HistData##
 	def showHist(self):
 		self.innerGroupBox.hide()
 		self.verticalLayoutWidget.show()
 		self.rSideGroupText.setText('Histogram')
 		self.showRGroupBox()
 
-##To Run the Algo##
+	##To Run the Algo##
 
 	def runForensics(self):
-		# Step 2: Create a QThread object
-		self.thread = QThread()
-		# Step 3: Create a worker object
-		self.worker = Worker()
-		# Step 4: Move worker to the thread
-		self.worker.moveToThread(self.thread)
-		# Step 5: Connect signals and slots
-		self.thread.started.connect(self.worker.run)
-		self.worker.finished.connect(self.thread.quit)
-		self.worker.finished.connect(self.worker.deleteLater)
-		self.thread.finished.connect(self.thread.deleteLater)
-		# self.worker.progress.connect(self.reportProgress)
-		# Step 6: Start the thread
-		self.thread.start()
+		pool = QThreadPool.globalInstance()
+		runnable = Runnable()
+		pool.start(runnable)
 
-		# Final resets
-		# self.longRunningBtn.setEnabled(False)
-		# # self.thread.finished.connect(
-		# # 	lambda: self.longRunningBtn.setEnabled(True)
-		# # )
-		# # self.thread.finished.connect(
-		# # 	lambda: self.stepLabel.setText("Long-Running Step: 0")
-		# # )
 
 
 
