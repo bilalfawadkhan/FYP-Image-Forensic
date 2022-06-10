@@ -400,7 +400,7 @@ class UiMainWindow(object):
 		self.uploadButton.setAutoFillBackground(False)
 		self.uploadButton.setStyleSheet(
 			"#uploadButton{border-radius: 20px;border:2px solid qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 rgba(245, 75, 100, 255), stop:1 rgba(247, 131, 97, 255)); background-color :#121212};\n"
-			"#uploadButton:hover{background-color : qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 rgba(245, 75, 100, 255), stop:1 rgba(247, 131, 97, 255))}")
+			"#uploadButton:hover{background-color : qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 rgba(245, 75, 100, 255), stop:1 rgba(247, 131, 97, 255));}")
 		self.uploadButton.setText("")
 		icon4 = QtGui.QIcon()
 		icon4.addPixmap(QtGui.QPixmap("UI Resources/plus Icon/plus 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -714,6 +714,7 @@ class UiMainWindow(object):
 										 "#metaonebutton:hover{background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 rgba(245, 75, 100, 255), stop:1 rgba(247, 131, 97, 255));}")
 		self.metaonebutton.setObjectName("metaonebutton")
 		self.metaonebutton.setText('1')
+		self.metaonebutton.clicked.connect(self.setMetaData)
 		self.verticalLayoutWidget = QtWidgets.QWidget(self.rSideGroup)
 		self.verticalLayoutWidget.setGeometry(QtCore.QRect(19, 89, 321, 341))
 		self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
@@ -862,13 +863,15 @@ class UiMainWindow(object):
 
 	## Method to Extact Meta Data and Setting it in the GUI Views ##
 
-	def setMetaData(self, flag):
+	def setMetaData(self, flag=1):
 		jpeg_tags = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
 		tif_tags = ['Image ImageLength', 'Image ImageWidth']
+		title =['Height','Width','Size','Make','Creation Date']
 		tagtoberead = []
 		block = [self.block1value, self.block2value, self.block3value, self.block4value, self.block5value]
+		imlabel = [self.block1Title, self.block2Title, self.block3Title, self.block4Title, self.block5Title]
 		for b in range(len(block)):
-			block[b].setText(jpeg_tags[b])
+			imlabel[b].setText(title[b])
 		if flag == 1:
 			f = open(self.mainimagepath, 'rb')
 			tags = exifread.process_file(f)
@@ -918,7 +921,7 @@ class UiMainWindow(object):
 			for keys in range(len(tagtoberead)):
 				block[keys].setText('Nil')
 
-	# Method to set iamge in Main Image Window
+	# Method to set image in Main Image Window
 	def setImage(self, flag: int):
 		if flag == 1:
 			self.mainImage.setPixmap(QtGui.QPixmap(self.mainimagepath))
