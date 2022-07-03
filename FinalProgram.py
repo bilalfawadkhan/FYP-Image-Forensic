@@ -466,7 +466,7 @@ class UiMainWindow(object):
 		self.runbutton.setIcon(icon5)
 		self.runbutton.setIconSize(QtCore.QSize(35, 35))
 		self.runbutton.setObjectName("runbutton")
-		self.runbutton.clicked.connect(self.runForensics)
+		self.runbutton.clicked.connect(self.batchProcess)
 		self.stopbutton = QtWidgets.QPushButton(self.playstopgroup)
 		self.stopbutton.setGeometry(QtCore.QRect(80, 0, 61, 61))
 		self.stopbutton.setStyleSheet("#stopbutton{border-radius: 20px;}\n"
@@ -839,7 +839,7 @@ class UiMainWindow(object):
 			self.isImageinProjectDir()
 			print(self.projectDirList)
 
-	##This method runs whenever ever image change is detectd wether from selection or deletion##
+	##This method runs whenever ever image change is detected whether from selection or deletion##
 	def selectImageonChange(self):
 		toselect = self.projectDirList.currentItem()
 		if toselect is not None:
@@ -975,6 +975,11 @@ class UiMainWindow(object):
 		pool = QThreadPool.globalInstance()
 		runnable = Runnable(self.mainimagepath)
 		pool.start(runnable)
+
+	def batchProcess(self):
+		p = list(self.imgpathDict.values())
+		print(p)
+		# for i in self.imgpathDict.values(self)
 
 class Runnable(QRunnable):
 	def __init__(self,p):
