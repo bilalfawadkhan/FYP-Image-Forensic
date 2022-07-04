@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
 
+import cv2
+import exifread
 import matplotlib as plt
-import exifread, cv2
 
 plt.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect, QObject, pyqtSignal, QThread, QRunnable, QThreadPool
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QRect, QRunnable, QThreadPool
 from PyQt5.QtWidgets import QFileDialog, QListWidgetItem
-
 import ChangeofLaplacian as cl
-
 import tifffile as tf
 
 
@@ -23,13 +21,6 @@ class MplCanvas(FigureCanvasQTAgg):
 		fig = Figure(figsize=(width, height), dpi=dpi)
 		self.axes = fig.add_subplot(111)
 		super(MplCanvas, self).__init__(fig)
-
-
-# self.progress.emit(i + 1)
-# self.finished.emit()
-
-
-
 
 
 class UiMainWindow(object):
@@ -866,7 +857,7 @@ class UiMainWindow(object):
 	def setMetaData(self, flag=1):
 		jpeg_tags = ['Image ImageLength', 'Image ImageWidth', 'EXIF ColorSpace', 'Image Make', 'EXIF DateTimeOriginal']
 		tif_tags = ['Image ImageLength', 'Image ImageWidth']
-		title =['Height','Width','Size','Make','Creation Date']
+		title = ['Height', 'Width', 'Size', 'Make', 'Creation Date']
 		tagtoberead = []
 		block = [self.block1value, self.block2value, self.block3value, self.block4value, self.block5value]
 		imlabel = [self.block1Title, self.block2Title, self.block3Title, self.block4Title, self.block5Title]
@@ -975,14 +966,16 @@ class UiMainWindow(object):
 		pool = QThreadPool.globalInstance()
 		runnable = Runnable(self.mainimagepath)
 		pool.start(runnable)
+		self.mainImage.setPixmap(QtGui.QPixmap("InputImages/testimg1.jpeg"))
 
 	def batchProcess(self):
 		p = list(self.imgpathDict.values())
 		print(p)
-		# for i in self.imgpathDict.values(self)
+
+
 
 class Runnable(QRunnable):
-	def __init__(self,p):
+	def __init__(self, p):
 		super().__init__()
 		self.p = p
 
@@ -995,6 +988,7 @@ class Runnable(QRunnable):
 		fim = cl.getChangeofLaplacian(img)
 		tf.imwrite('OutputImages\\8bitpyth.tif', fim, photometric='rgb')
 		print('Task Finished')
+
 
 if __name__ == "__main__":
 	import sys
