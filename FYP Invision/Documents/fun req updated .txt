@@ -1,0 +1,7 @@
+1. The system should be able to analyze the image/images uploaded by the user.
+2. The system should be able to perform metadata analysis on the uploaded images 
+3. The system will display visual data such as color composition, color saturation, contrast, and image clarity.
+4. The system should perform preliminary forgery checks 
+5. The system will visually display the output from the results of forgery detection using graphical elements such as pie charts and histograms 
+6. The system should be able to process multiple images in a batch to perform analysis.
+7. The system will  generate a report of the processed images 
